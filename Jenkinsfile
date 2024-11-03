@@ -7,6 +7,7 @@ pipeline {
     }
     environment {
         GIT_REPO = "https://github.com/aakkiiff/demo_config.git" 
+        GIT_CREDENTIAL_ID = "github"
     }
 
     stages{
@@ -37,7 +38,7 @@ pipeline {
                 sh 'git add ./k8s/deployment.yaml'
                 sh "git commit -m 'Updated deployment files to ${IMAGE_TAG}'"
 
-                withCredentials([usernamePassword(credentialsId: 'github', passwordVariable: 'pass', usernameVariable: 'uname')]) {
+                withCredentials([usernamePassword(credentialsId: env.GIT_CREDENTIAL_ID, passwordVariable: 'pass', usernameVariable: 'uname')]) {
                     sh 'git push https://$uname:$pass@github.com/aakkiiff/demo_config.git main'
                 }
             }
