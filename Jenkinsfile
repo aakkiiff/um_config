@@ -6,7 +6,7 @@ pipeline {
         string(name: 'APP_NAME', description: 'Enter the APP_NAME')
     }
     environment {
-        GIT_REPO = "https://github.com/aakkiiff/demo_config.git" 
+        GIT_REPO = "https://github.com/aakkiiff/um_config.git" 
         GIT_CREDENTIAL_ID = "github"
     }
 
@@ -29,13 +29,13 @@ pipeline {
         stage("UPDATE K8S DEPLOYMENT FILES AND PUSH TO THE GIT REPO"){
             steps{
 
-                sh 'cat ./k8s/deployment.yaml'
-                sh "sed -i 's/${APP_NAME}.*/${APP_NAME}:${IMAGE_TAG}/g' ./k8s/deployment.yaml"
-                sh 'cat ./k8s/deployment.yaml'
+                sh 'cat ./k8s-manifests/deployment.yaml'
+                sh "sed -i 's/${APP_NAME}.*/${APP_NAME}:${IMAGE_TAG}/g' ./k8s-manifests/deployment.yaml"
+                sh 'cat ./k8s-manifests/deployment.yaml'
 
                 sh 'git config --global user.email jackakif@gmail.com'
                 sh 'git config --global user.name aakkiiff'
-                sh 'git add ./k8s/deployment.yaml'
+                sh 'git add ./k8s-manifests/deployment.yaml'
                 sh "git commit -m 'Updated deployment files to ${IMAGE_TAG}'"
 
                 withCredentials([usernamePassword(credentialsId: env.GIT_CREDENTIAL_ID, passwordVariable: 'pass', usernameVariable: 'uname')]) {
