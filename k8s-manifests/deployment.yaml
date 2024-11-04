@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
         - name: client-container
-          image: demo_frontend:3
+          image: demo_frontend:4
           ports:
             - containerPort: 80
