@@ -7,7 +7,9 @@ pipeline {
     }
     environment {
         GIT_REPO = "https://github.com/aakkiiff/um_config.git" 
+        REPO_NAME = "um_config"
         GIT_CREDENTIAL_ID = "github"
+        EMAIL = "jackakif@gmail.com"
     }
 
     stages{
@@ -32,14 +34,13 @@ pipeline {
                 sh 'cat ./k8s-manifests/deployment.yaml'
                 sh "sed -i 's/${APP_NAME}.*/${APP_NAME}:${IMAGE_TAG}/g' ./k8s-manifests/deployment.yaml"
                 sh 'cat ./k8s-manifests/deployment.yaml'
-
-                sh 'git config --global user.email jackakif@gmail.com'
-                sh 'git config --global user.name aakkiiff'
                 sh 'git add ./k8s-manifests/deployment.yaml'
                 sh "git commit -m 'Updated deployment files to ${IMAGE_TAG}'"
 
                 withCredentials([usernamePassword(credentialsId: env.GIT_CREDENTIAL_ID, passwordVariable: 'pass', usernameVariable: 'uname')]) {
-                    sh 'git push https://$uname:$pass@github.com/aakkiiff/demo_config.git main'
+                    sh 'git config --global user.email $EMAIL'
+                    sh 'git config --global user.name $uname'
+                    sh 'git push https://$uname:$pass@github.com/$uname/$REPO_NAME.git main'
                 }
             }
         }
