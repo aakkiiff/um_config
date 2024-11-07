@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
         - name: client-container
-          image: devopsaes/yourmentors_fe:4
+          image: devopsaes/yourmentors_fe:5
           ports:
             - containerPort: 80
