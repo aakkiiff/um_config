@@ -41,12 +41,3 @@ module "EKS" {
   private_nodegroup_1    = var.private_nodegroup_1
 }
 
-module "jenkins" {
-  source            = "../../modules/jenkins"
-  created_by        = var.created_by
-  cluster_name      = var.cluster_name
-  aws_region        = var.aws_region
-  jenkins_vpc_id    = module.VPC.vpc_id
-  jenkins_ec2_size  = var.jenkins_ec2_size
-  jenkins_subnet_id = module.VPC.subnet_id_public_1
-}
