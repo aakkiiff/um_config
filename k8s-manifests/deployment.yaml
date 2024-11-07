@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
         - name: client-container
-          image: devopsaes/demo_frontend:5
+          image: devopsaes/demo_frontend:6
           ports:
             - containerPort: 80
